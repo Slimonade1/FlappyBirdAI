@@ -39,7 +39,7 @@ class Bird{
         let closest = null
         let closestD = Infinity
         for(let i = 0; i < pipes.length; i++){
-            let d = pipes[i].x - this.x
+            let d = pipes[i].x + pipes[i].width + 10 - this.x
             if(d < closestD && d > 0){
                 closest = pipes[i]
                 closestD = d
@@ -61,20 +61,19 @@ class Bird{
 
     update(){
         this.score++
-
         this.gravity += 0.25
         this.y += this.gravity
+    }
 
+    collision(){
         // Ground detection
-        if(this.y > canvas.height){
-            this.y = canvas.height
-            this.gravity = 0
+        if(this.y + this.radius > canvas.height){
+            return true
         }
 
         // Roof detection
-        if(this.y < 0){
-            this.y = 0
-            this.gravity = 0
+        if(this.y - this.radius < 0){
+            return true
         }
     }
 

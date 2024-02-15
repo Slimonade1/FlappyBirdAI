@@ -32,6 +32,7 @@ function animate(){
         for (let i = pipes.length - 1; i >= 0; i--) {
             pipes[i].update()
             pipes[i].score()
+
       
             for (let j = birds.length - 1; j >= 0; j--) {
               if (pipes[i].collision(birds[j])) {
@@ -44,18 +45,18 @@ function animate(){
             }
         }
 
-        birds.forEach(bird => {
+        birds.forEach((bird, index) => {
             bird.think(pipes)
             bird.update()
+
+            if(bird.collision()){
+                birds.splice(index, 1)
+            }
+
         })
 
         if(birds.length === 0){
-            counter = 0
-            score = 0
-            gen++
-            nextGeneration()
-            document.getElementById("gen").innerHTML = "Gen: " + gen
-            pipes = []
+            retry()
         }
     }
     // All the drawing stuff
@@ -72,10 +73,14 @@ function animate(){
     requestAnimationFrame(animate)
 }
 
-/* addEventListener('click', (event) => 
-    {
-        bird.flap()
-    }
-) */
+function retry(){
+    pipes = []
+    counter = 0
+    score = 0
+    gen++
+    nextGeneration()
+    document.getElementById("gen").innerHTML = "Gen: " + gen
+    document.getElementById("score").innerHTML = "Score: " + score
+}
 
 animate()
