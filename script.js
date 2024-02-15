@@ -70,6 +70,11 @@ function animate(){
         pipe.draw()
     })
 
+    // See through the AI's eyes
+    if(document.getElementById("theme").checked){
+        console.log("Checked")
+    }
+
     requestAnimationFrame(animate)
 }
 

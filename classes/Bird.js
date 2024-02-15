@@ -39,7 +39,7 @@ class Bird{
         let closest = null
         let closestD = Infinity
         for(let i = 0; i < pipes.length; i++){
-            let d = pipes[i].x + pipes[i].width + 10 - this.x
+            let d = pipes[i].x + pipes[i].width + this.radius - this.x
             if(d < closestD && d > 0){
                 closest = pipes[i]
                 closestD = d
