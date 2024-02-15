@@ -13,6 +13,8 @@ class Pipe{
 
         this.color = "white"
         this.velocity = 2
+
+        this.scoreAchieved = false
     }
 
     drawRect(x, y, w, h){
@@ -37,13 +39,19 @@ class Pipe{
     }
 
     score(){
-        let x = canvas.width/4
-        let radius = 20
+        if(this.scoreAchieved){
+            return
+        }
 
-        if(x - radius == this.x + this.width){
-            score += 1
+        let x = canvas.width/4
+        let radius = 15
+
+        if(x - radius > this.x + this.width){
+            this.scoreAchieved = true
+            score++
             document.getElementById("score").innerHTML = "Score: " + score
         }
+
     }
 
     offscreen(){

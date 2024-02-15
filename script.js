@@ -30,16 +30,17 @@ function animate(){
 
         
         for (let i = pipes.length - 1; i >= 0; i--) {
-            pipes[i].update();
+            pipes[i].update()
+            pipes[i].score()
       
             for (let j = birds.length - 1; j >= 0; j--) {
               if (pipes[i].collision(birds[j])) {
-                savedBirds.push(birds.splice(j, 1)[0]);
+                savedBirds.push(birds.splice(j, 1)[0])
               }
             }
       
             if (pipes[i].offscreen()) {
-              pipes.splice(i, 1);
+              pipes.splice(i, 1)
             }
         }
 
@@ -50,8 +51,9 @@ function animate(){
 
         if(birds.length === 0){
             counter = 0
-            nextGeneration()
+            score = 0
             gen++
+            nextGeneration()
             document.getElementById("gen").innerHTML = "Gen: " + gen
             pipes = []
         }
