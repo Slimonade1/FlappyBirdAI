@@ -13,7 +13,7 @@ class Bird{
         if(brain){
             this.brain = brain.copy()
         } else{
-            this.brain = new NeuralNetwork(4, 4, 1)
+            this.brain = new NeuralNetwork(4, 2, 1)
         }
     }
 
