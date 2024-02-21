@@ -3,10 +3,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bird AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
 </head>
 <body>
-    <canvas></canvas>
+    <canvas id="gameCanvas"></canvas>
+    <div id="data"></div>
+    <canvas id="myChart" width="500" height="200"></canvas>
 
     <div>
         <input type="range" id="speedSlider" name="Speed" min="1" max="100" value="1" />
@@ -24,6 +27,7 @@
     <script src="./classes/Bird.js"></script>
     <script src="./classes/Pipe.js"></script>
 
+    <script src="./graph.js"></script>
     <script src="./geneticAlgorithm.js"></script>
     <script src="./script.js"></script>
 </body>

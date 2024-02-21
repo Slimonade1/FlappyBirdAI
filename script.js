@@ -1,4 +1,4 @@
-const canvas = document.querySelector('canvas')
+const canvas = document.getElementById("gameCanvas")
 const c = canvas.getContext('2d')
 canvas.width = 400 //window.innerWidth
 canvas.height = 400 //window.innerHeight
@@ -78,11 +78,19 @@ function animate(){
 }
 
 function retry(){
+    // Run score chart for the previous generations
+    addData("Gen: " + gen, score)
+    
+    // Reset pipes and scores
     pipes = []
     counter = 0
     score = 0
+
+    // Spawn the next generation
     gen++
     nextGeneration()
+
+    // Update text
     document.getElementById("gen").innerHTML = "Gen: " + gen
     document.getElementById("score").innerHTML = "Score: " + score
 }
