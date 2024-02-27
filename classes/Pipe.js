@@ -49,7 +49,6 @@ class Pipe{
         if(x - radius > this.x + this.width){
             this.scoreAchieved = true
             score++
-            document.getElementById("score").innerHTML = "Score: " + score
         }
 
     }

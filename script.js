@@ -69,7 +69,24 @@ function animate(){
     pipes.forEach(pipe =>{
         pipe.draw()
     })
-    
+
+    if(document.getElementById("theme").checked){
+        drawLines()
+    }
+
+    // Text on screen
+    c.fillStyle = "rgb(20, 20, 20)"
+    c.fillRect(2, 2, 95, 45)
+
+    c.font = "15px Arial"
+    c.fillStyle = "white"
+    c.fillText("Gen: " + gen, 10, 20)
+    c.fillText("Score: " +score, 10, 40)
+
+    requestAnimationFrame(animate)
+}
+
+function drawLines(){
     if(pipes.length !== 0){
         let closest = null
         let closestD = Infinity
@@ -82,27 +99,23 @@ function animate(){
         }
 
         // See through the AI's eyes
-        if(document.getElementById("theme").checked){
-            birds.forEach(bird =>{
-                // Change line color to white
-                c.strokeStyle = "white"
+        birds.forEach(bird =>{
+            // Change line color to white
+            c.strokeStyle = "white"
 
-                // Draw top of pipe
-                c.beginPath()
-                c.moveTo(bird.x, bird.y)
-                c.lineTo(closest.x, closest.top)
-                c.stroke()
+            // Draw top of pipe
+            c.beginPath()
+            c.moveTo(bird.x, bird.y)
+            c.lineTo(closest.x, closest.top)
+            c.stroke()
 
-                // Draw bottom of pipe
-                c.beginPath()
-                c.moveTo(bird.x, bird.y)
-                c.lineTo(closest.x, closest.bottom)
-                c.stroke()
-            })
-        }
+            // Draw bottom of pipe
+            c.beginPath()
+            c.moveTo(bird.x, bird.y)
+            c.lineTo(closest.x, closest.bottom)
+            c.stroke()
+        })
     }
-
-    requestAnimationFrame(animate)
 }
 
 function retry(){
@@ -117,10 +130,10 @@ function retry(){
     // Spawn the next generation
     gen++
     nextGeneration()
-
-    // Update text
+    
+    /* // Update text
     document.getElementById("gen").innerHTML = "Gen: " + gen
-    document.getElementById("score").innerHTML = "Score: " + score
+    document.getElementById("score").innerHTML = "Score: " + score */
 }
 
 animate()
