@@ -74,7 +74,7 @@ function animate(){
         let closest = null
         let closestD = Infinity
         for(let i = 0; i < pipes.length; i++){
-            let d = pipes[i].x + pipes[i].width + 15 - canvas.width/4
+            let d = pipes[i].x + pipes[i].width + birds[0].radius - birds[0].x
             if(d < closestD && d > 0){
                 closest = pipes[i]
                 closestD = d
@@ -98,7 +98,6 @@ function animate(){
                 c.moveTo(bird.x, bird.y)
                 c.lineTo(closest.x, closest.bottom)
                 c.stroke()
-                
             })
         }
     }
