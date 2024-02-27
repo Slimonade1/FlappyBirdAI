@@ -69,10 +69,38 @@ function animate(){
     pipes.forEach(pipe =>{
         pipe.draw()
     })
+    
+    if(pipes.length !== 0){
+        let closest = null
+        let closestD = Infinity
+        for(let i = 0; i < pipes.length; i++){
+            let d = pipes[i].x + pipes[i].width + 15 - canvas.width/4
+            if(d < closestD && d > 0){
+                closest = pipes[i]
+                closestD = d
+            }
+        }
 
-    // See through the AI's eyes
-    if(document.getElementById("theme").checked){
-        console.log("Pressed")
+        // See through the AI's eyes
+        if(document.getElementById("theme").checked){
+            birds.forEach(bird =>{
+                // Change line color to white
+                c.strokeStyle = "white"
+
+                // Draw top of pipe
+                c.beginPath()
+                c.moveTo(bird.x, bird.y)
+                c.lineTo(closest.x, closest.top)
+                c.stroke()
+
+                // Draw bottom of pipe
+                c.beginPath()
+                c.moveTo(bird.x, bird.y)
+                c.lineTo(closest.x, closest.bottom)
+                c.stroke()
+                
+            })
+        }
     }
 
     requestAnimationFrame(animate)
