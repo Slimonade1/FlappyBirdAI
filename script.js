@@ -72,6 +72,7 @@ function animate(){
 
     // See through the AI's eyes
     if(document.getElementById("theme").checked){
+        console.log("Pressed")
     }
 
     requestAnimationFrame(animate)
