@@ -4,12 +4,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bird AI</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
-    <div id="data"></div>
-    <canvas id="myChart" width="500" height="200"></canvas>
+    <div class="placeMiddle">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    
+    <div id="data" class="placeLeft">
+        <canvas id="myChart" width="500" height="200"></canvas>
+    </div>
 
     <div>
         <input type="range" id="speedSlider" name="Speed" min="1" max="100" value="1" />

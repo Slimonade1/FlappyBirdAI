@@ -1,0 +1,9 @@
+div.placeMiddle {
+    position: absolute;
+    left: 400px;  
+}
+
+div.placeLeft {
+    position: absolute;
+    left: 800px;  
+}
