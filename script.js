@@ -17,6 +17,8 @@ for(let i = 0; i < TOTAL; i++){
     birds[i] = new Bird()
 }
 
+let bestBirdWeight
+
 
 function animate(){
     cycles = document.getElementById("speedSlider").value
@@ -57,9 +59,12 @@ function animate(){
 
         if(birds.length === 0){
             retry()
+            console.log(bestBirdWeight)
+            console.log(bestBirdWeight.print())
         }
     }
     // All the drawing stuff
+    // Background
     c.fillStyle = "black"
     c.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -70,18 +75,23 @@ function animate(){
         pipe.draw()
     })
 
+    // See what the AI sees
     if(document.getElementById("theme").checked){
         drawLines()
     }
 
-    // Text on screen
-    c.fillStyle = "rgb(20, 20, 20)"
-    c.fillRect(2, 2, 95, 45)
+    // Neural network visualization
+    drawNeuralNetwork()
 
+    // Text on screen
     c.font = "15px Arial"
     c.fillStyle = "white"
     c.fillText("Gen: " + gen, 10, 20)
-    c.fillText("Score: " +score, 10, 40)
+    
+    c.font = "30px Arial"
+    let textString = score,
+    textWidth = c.measureText(textString).width
+    c.fillText(textString , (canvas.width/2) - (textWidth / 2), 40);
 
     requestAnimationFrame(animate)
 }
@@ -118,6 +128,43 @@ function drawLines(){
     }
 }
 
+function drawNeuralNetwork(){
+    let x = 280
+    let y = 280
+    let radius = 12
+
+    for(let i = 0; i < birds[0].inputs_length; i++){
+        for(let j = 0; j < birds[0].hidden_layers_length; j++){
+            c.beginPath()
+            c.moveTo(x, y + i*30)
+            c.lineTo(x + 50, y + j*30)
+            c.stroke()
+        }
+
+        drawCircle(x, y, radius, i, 30)
+
+        c.font = "15px Arial"
+        c.fillStyle = "white"
+        c.fillText(i, x-4, y + 5 + i*30)
+    }
+
+    for(let i = 0; i < birds[0].hidden_layers_length; i++){
+        drawCircle(x + 50, y, radius, i , 30)
+
+        c.font = "15px Arial"
+        c.fillStyle = "white"
+        c.fillText(i, x + 50 - 4, y + 5 + i*30)
+    }
+}
+
+function drawCircle(x, y, radius, index, spacing){
+    c.beginPath()
+    c.arc(x, y + index*30, radius, 0, 2*Math.PI, false)
+    c.fillStyle = "black"
+    c.stroke()
+    c.fill()
+}
+
 function retry(){
     // Run score chart for the previous generations
     addData("Gen: " + gen, score)
@@ -130,10 +177,6 @@ function retry(){
     // Spawn the next generation
     gen++
     nextGeneration()
-    
-    /* // Update text
-    document.getElementById("gen").innerHTML = "Gen: " + gen
-    document.getElementById("score").innerHTML = "Score: " + score */
 }
 
 animate()

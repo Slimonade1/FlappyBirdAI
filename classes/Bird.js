@@ -10,10 +10,14 @@ class Bird{
         this.score = 0
         this.fitness = 0
 
+        this.inputs_length = 4
+        this.hidden_layers_length = 1
+        this.outputs_length = 1
+
         if(brain){
             this.brain = brain.copy()
         } else{
-            this.brain = new NeuralNetwork(4, 2, 1)
+            this.brain = new NeuralNetwork(this.inputs_length, this.hidden_layers_length, this.outputs_length)
         }
     }
 
