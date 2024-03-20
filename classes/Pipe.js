@@ -1,11 +1,11 @@
 class Pipe{
 
     constructor(){
-        this.x = canvas.width
+        this.x = gameCanvas.width
         this.y = 0
 
         this.width = 50
-        this.height = (Math.random() * (0.7-0.1) + 0.1) * canvas.height
+        this.height = (Math.random() * (0.7-0.1) + 0.1) * gameCanvas.height
         this.distance = 120
 
         this.top = this.height
@@ -18,15 +18,15 @@ class Pipe{
     }
 
     drawRect(x, y, w, h){
-        c.beginPath()
-        c.rect(x, y, w, h)
-        c.fillStyle = this.color
-        c.fill()
+        gameCtx.beginPath()
+        gameCtx.rect(x, y, w, h)
+        gameCtx.fillStyle = this.color
+        gameCtx.fill()
     }
 
     draw(){
         this.drawRect(this.x, this.y, this.width, this.height)
-        this.drawRect(this.x, this.bottom, this.width, canvas.height)
+        this.drawRect(this.x, this.bottom, this.width, gameCanvas.height)
     }
 
     collision(bird){
@@ -43,7 +43,7 @@ class Pipe{
             return
         }
 
-        let x = canvas.width/4
+        let x = gameCanvas.width/4
         let radius = 15
 
         if(x - radius > this.x + this.width){

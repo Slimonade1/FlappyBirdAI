@@ -1,7 +1,7 @@
-const canvas = document.getElementById("gameCanvas")
-const c = canvas.getContext('2d')
-canvas.width = 400 //window.innerWidth
-canvas.height = 400 //window.innerHeight
+const gameCanvas = document.getElementById("gameCanvas")
+const gameCtx = gameCanvas.getContext('2d')
+gameCanvas.width = 400 //window.innerWidth
+gameCanvas.height = 400 //window.innerHeight
 
 let birds = []
 let savedBirds = []
@@ -59,14 +59,13 @@ function animate(){
 
         if(birds.length === 0){
             retry()
-            console.log(bestBirdWeight)
-            console.log(bestBirdWeight.print())
+            //console.log(bestBirdWeight.print())
         }
     }
     // All the drawing stuff
     // Background
-    c.fillStyle = "black"
-    c.fillRect(0, 0, canvas.width, canvas.height)
+    gameCtx.fillStyle = "black"
+    gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height)
 
     birds.forEach(bird =>{
         bird.draw()
@@ -81,17 +80,20 @@ function animate(){
     }
 
     // Neural network visualization
-    drawNeuralNetwork()
+    // VIRKER IKKE FUCKING IKKE
+    if(birds[0].inputs[0] !== undefined){
+        drawNeuralNetwork()
+    }
 
     // Text on screen
-    c.font = "15px Arial"
-    c.fillStyle = "white"
-    c.fillText("Gen: " + gen, 10, 20)
+    gameCtx.font = "15px Arial"
+    gameCtx.fillStyle = "white"
+    gameCtx.fillText("Gen: " + gen, 10, 20)
     
-    c.font = "30px Arial"
+    gameCtx.font = "30px Arial"
     let textString = score,
-    textWidth = c.measureText(textString).width
-    c.fillText(textString , (canvas.width/2) - (textWidth / 2), 40);
+    textWidth = gameCtx.measureText(textString).width
+    gameCtx.fillText(textString , (gameCanvas.width/2) - (textWidth / 2), 40);
 
     requestAnimationFrame(animate)
 }
@@ -111,58 +113,21 @@ function drawLines(){
         // See through the AI's eyes
         birds.forEach(bird =>{
             // Change line color to white
-            c.strokeStyle = "white"
+            gameCtx.strokeStyle = "white"
 
             // Draw top of pipe
-            c.beginPath()
-            c.moveTo(bird.x, bird.y)
-            c.lineTo(closest.x, closest.top)
-            c.stroke()
+            gameCtx.beginPath()
+            gameCtx.moveTo(bird.x, bird.y)
+            gameCtx.lineTo(closest.x, closest.top)
+            gameCtx.stroke()
 
             // Draw bottom of pipe
-            c.beginPath()
-            c.moveTo(bird.x, bird.y)
-            c.lineTo(closest.x, closest.bottom)
-            c.stroke()
+            gameCtx.beginPath()
+            gameCtx.moveTo(bird.x, bird.y)
+            gameCtx.lineTo(closest.x, closest.bottom)
+            gameCtx.stroke()
         })
     }
-}
-
-function drawNeuralNetwork(){
-    let x = 280
-    let y = 280
-    let radius = 12
-
-    for(let i = 0; i < birds[0].inputs_length; i++){
-        for(let j = 0; j < birds[0].hidden_layers_length; j++){
-            c.beginPath()
-            c.moveTo(x, y + i*30)
-            c.lineTo(x + 50, y + j*30)
-            c.stroke()
-        }
-
-        drawCircle(x, y, radius, i, 30)
-
-        c.font = "15px Arial"
-        c.fillStyle = "white"
-        c.fillText(i, x-4, y + 5 + i*30)
-    }
-
-    for(let i = 0; i < birds[0].hidden_layers_length; i++){
-        drawCircle(x + 50, y, radius, i , 30)
-
-        c.font = "15px Arial"
-        c.fillStyle = "white"
-        c.fillText(i, x + 50 - 4, y + 5 + i*30)
-    }
-}
-
-function drawCircle(x, y, radius, index, spacing){
-    c.beginPath()
-    c.arc(x, y + index*30, radius, 0, 2*Math.PI, false)
-    c.fillStyle = "black"
-    c.stroke()
-    c.fill()
 }
 
 function retry(){

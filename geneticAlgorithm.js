@@ -1,7 +1,14 @@
+let previousBestBird = false
+
 function nextGeneration(){
     calculateFitness()
 
     for(let i = 0; i < TOTAL; i++){
+        if(i == 0){
+            previousBestBird = true
+        } else{
+            previousBestBird = false
+        }
         birds[i] = pickOne()
     }
     savedBirds = []
@@ -19,7 +26,9 @@ function pickOne(){
 
     let bird = savedBirds[index]
     let child = new Bird(bird.brain)
-    child.mutate()
+    if(!previousBestBird){
+        child.mutate()
+    }
     return child
 }
 

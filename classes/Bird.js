@@ -1,7 +1,7 @@
 class Bird{
     constructor(brain){
-        this.x = canvas.width/4
-        this.y = canvas.height/2
+        this.x = gameCanvas.width/4
+        this.y = gameCanvas.height/2
 
         this.radius = 15
         this.gravity = 0
@@ -14,20 +14,25 @@ class Bird{
         this.hidden_layers_length = 1
         this.outputs_length = 1
 
+        this.inputs = []
+
         if(brain){
             this.brain = brain.copy()
         } else{
             this.brain = new NeuralNetwork(this.inputs_length, this.hidden_layers_length, this.outputs_length)
         }
+
+        this.birdWeights_ih = this.brain.birdWeights_ih
+        this.birdWeights_ho = this.brain.birdWeights_ho
     }
 
     draw(){
-        c.beginPath()
-        c.arc(this.x, this.y, this.radius, 0, Math.PI*2, false)
-        c.strokeStyle = "black"
-        c.fillStyle = "rgba(255, 255, 255, 0.5)"
-        c.stroke()
-        c.fill()
+        gameCtx.beginPath()
+        gameCtx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false)
+        gameCtx.strokeStyle = "black"
+        gameCtx.fillStyle = "rgba(255, 255, 255, 0.5)"
+        gameCtx.stroke()
+        gameCtx.fill()
     }
 
     flap(){
@@ -39,7 +44,6 @@ class Bird{
     }
 
     think(pipes){
-
         // Find closest pipe
         let closest = null
         let closestD = Infinity
@@ -51,13 +55,13 @@ class Bird{
             }
         }
 
-        let inputs = []
-        inputs[0] = this.y         / canvas.height
-        inputs[1] = closest.top    / canvas.height
-        inputs[2] = closest.bottom / canvas.height
-        inputs[3] = closest.x      / canvas.width
+        this.inputs = []
+        this.inputs[0] = this.y         / gameCanvas.height
+        this.inputs[1] = closest.top    / gameCanvas.height
+        this.inputs[2] = closest.bottom / gameCanvas.height
+        this.inputs[3] = closest.x      / gameCanvas.width
 
-        let output = this.brain.predict(inputs)
+        let output = this.brain.predict(this.inputs)
         if(output[0] > 0.5){
             this.flap()
         }
@@ -72,7 +76,7 @@ class Bird{
 
     collision(){
         // Ground detection
-        if(this.y + this.radius > canvas.height){
+        if(this.y + this.radius > gameCanvas.height){
             return true
         }
 
